@@ -3,6 +3,7 @@ package view;
 import java.io.IOException;
 
 import controller.RegisterController;
+import controller.constants.FXMLFileNames;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -21,7 +22,7 @@ public class RegisterScene {
 	}
 
 	public String getTitle() {
-		return "Register Page";
+		return "Registration Page";
 	}
 	
 	public Scene getScene() {
@@ -31,7 +32,7 @@ public class RegisterScene {
 		}
 		
 		// load FXML
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("registration_page.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLFileNames.REGISTRATION_PAGE));
 				
 		// load the FXML
 		Parent parentNode = null;

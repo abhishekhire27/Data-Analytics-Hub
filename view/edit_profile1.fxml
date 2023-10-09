@@ -9,13 +9,13 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.RegisterController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.EditProfileController">
    <children>
       <VBox layoutY="1.0" prefHeight="400.0" prefWidth="600.0">
          <children>
             <HBox alignment="CENTER" prefHeight="98.0" prefWidth="600.0">
                <children>
-                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: blue;" text="Data Analytics Hub Registration">
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: blue;" text="Data Analytics Hub">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
@@ -32,12 +32,12 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="firstNameRegistration" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="216.0">
+                  <TextField fx:id="firstNameProfileEdit" alignment="CENTER_RIGHT" prefHeight="26.0" prefWidth="216.0">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <Text fx:id="firstNameErrorRegistration" fill="#ea0505" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Text fx:id="firstNameErrorEditProfile" fill="#ea0505" strokeType="OUTSIDE" strokeWidth="0.0">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -51,12 +51,12 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="lastNameRegistration" prefHeight="26.0" prefWidth="216.0" style="-fx-max-width: 300;">
+                  <TextField fx:id="lastNameProfileEdit" prefHeight="26.0" prefWidth="216.0" style="-fx-max-width: 300;">
                      <HBox.margin>
                         <Insets left="10.0" />
                      </HBox.margin>
                   </TextField>
-                  <Text fx:id="lastNameErrorRegistration" fill="#ef0909" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Text fx:id="lastNameErrorEditProfile" fill="#ef0909" strokeType="OUTSIDE" strokeWidth="0.0">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -70,12 +70,12 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="userNameRegistration" prefHeight="26.0" prefWidth="214.0" style="-fx-max-width: 300;">
+                  <TextField fx:id="userNameProfileEdit" prefHeight="26.0" prefWidth="214.0" style="-fx-max-width: 300;">
                      <HBox.margin>
                         <Insets left="8.0" />
                      </HBox.margin>
                   </TextField>
-                  <Text fx:id="userNameErrorRegistration" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Text fx:id="userNameErrorEditProfile" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
@@ -89,28 +89,33 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="passwordRegistration" prefHeight="26.0" prefWidth="211.0" style="-fx-max-width: 300;">
+                  <TextField fx:id="passwordProfileEdit" prefHeight="26.0" prefWidth="211.0" style="-fx-max-width: 300;">
                      <HBox.margin>
                         <Insets left="16.0" />
                      </HBox.margin>
                   </TextField>
-                  <Text fx:id="passwordErrorRegistration" fill="#ec0909" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <Text fx:id="passwordErrorEditProfile" fill="#ec0909" strokeType="OUTSIDE" strokeWidth="0.0">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
                </children>
             </HBox>
-            <HBox prefHeight="55.0" prefWidth="600.0">
+            <HBox alignment="CENTER" prefHeight="55.0" prefWidth="600.0">
                <children>
-                  <Button fx:id="registerButton" alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registerHandler" text="Register" textFill="#08793b">
+                  <Button alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registerHandler" text="Update Profile" textFill="#08793b">
                      <HBox.margin>
-                        <Insets left="250.0" />
+                        <Insets />
+                     </HBox.margin>
+                  </Button>
+                  <Button mnemonicParsing="false" onAction="#backToMenuHandler" text="Back to Menu" textFill="#075922">
+                     <HBox.margin>
+                        <Insets left="100.0" />
                      </HBox.margin>
                   </Button>
                </children>
             </HBox>
-            <HBox prefHeight="73.0" prefWidth="600.0">
+            <HBox alignment="CENTER" prefHeight="73.0" prefWidth="600.0">
                <children>
                   <Text fx:id="invalidCredentilsErrorMessage" fill="#f70505" strokeType="OUTSIDE" strokeWidth="0.0">
                      <HBox.margin>

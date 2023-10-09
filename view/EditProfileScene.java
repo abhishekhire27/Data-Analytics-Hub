@@ -2,6 +2,7 @@ package view;
 
 import java.io.IOException;
 
+import controller.EditProfileController;
 import controller.LoginController;
 import controller.constants.FXMLFileNames;
 import javafx.fxml.FXMLLoader;
@@ -9,18 +10,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class LoginScene {
+public class EditProfileScene {
 	
 	private Stage primaryStage;
 	private Scene scene;
 	
-	public LoginScene(Stage primaryStage) {
+	public EditProfileScene(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		scene = null;
 	}
 	
 	public String getTitle() {
-		return "Login Page";
+		return "Edit Profile";
 	}
 	
 	public Scene getScene() {
@@ -29,7 +30,7 @@ public class LoginScene {
 		}
 		
 		// load FXML
-		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLFileNames.LOGIN_PAGE));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource(FXMLFileNames.EDIT_PROFILE_PAGE));
 				
 		// load the FXML
 		Parent parentNode = null;
@@ -39,8 +40,8 @@ public class LoginScene {
 			e.printStackTrace();
 		}
 		
-		LoginController loginController = loader.getController();
-		loginController.setPrimaryStage(primaryStage);
+		EditProfileController editProfileController = loader.getController();
+		editProfileController.setPrimaryStage(primaryStage);
 		
 		// create a scene
 		Scene scene = new Scene(parentNode);
@@ -48,14 +49,5 @@ public class LoginScene {
 		return scene;
 		
 	}
-	
+
 }
-
-
-
-
-
-
-
-
-

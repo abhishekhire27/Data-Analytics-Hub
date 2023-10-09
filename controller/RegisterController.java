@@ -4,52 +4,90 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.User;
 import view.LoginScene;
+import view.RegisterScene;
 
 public class RegisterController {
 	
 	private Stage primaryStage;
 	
 	@FXML
-	private TextField firstName;
+	private TextField firstNameRegistration;
+	@FXML
+	private TextField lastNameRegistration;
+	@FXML
+	private TextField userNameRegistration;
+	@FXML
+	private TextField passwordRegistration;
 	
 	@FXML
-	private TextField lastName;
-	
+	private Text firstNameErrorRegistration;
 	@FXML
-	private TextField userName;
-	
+	private Text lastNameErrorRegistration;
 	@FXML
-	private TextField password;
+	private Text userNameErrorRegistration;
+	@FXML
+	private Text passwordErrorRegistration;
+	@FXML
+	private Text invalidCredentilsErrorMessage;
 	
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-
-//	public void goBackButtonHandler(ActionEvent event) {
-//		Button b = (Button) event.getSource();
-//		
-//		LoginScene imageViewerScene = new LoginScene(primaryStage);
-//		
-//		primaryStage.setTitle(imageViewerScene.getTitle());
-//		primaryStage.setScene(imageViewerScene.getScene());
-//		
-//		primaryStage.show();
-//
-//		
-//		// can access primary stage here
-//		
-//	}
-//	
-//	public void button2Handler(ActionEvent event) {
-//		// can access primary stage here		
-//	}
 	
 	@FXML
 	public void registerHandler(ActionEvent event) {
-		System.out.println(firstName.getText());
+		// Reseting the error message
+		firstNameErrorRegistration.setText("");
+		lastNameErrorRegistration.setText("");
+		userNameErrorRegistration.setText("");
+		passwordErrorRegistration.setText("");
+		
+		boolean wrongDataEntered = false;
+		if(firstNameRegistration.getText() == null || firstNameRegistration.getText() == "") {
+			firstNameErrorRegistration.setText("First name cannot be empty");
+			wrongDataEntered = true;
+		}
+		if(lastNameRegistration.getText() == null || lastNameRegistration.getText() == "") {
+			lastNameErrorRegistration.setText("Last name cannot be empty");
+			wrongDataEntered = true;
+		}
+		if(userNameRegistration.getText() == null || userNameRegistration.getText() == "") {
+			userNameErrorRegistration.setText("User name cannot be empty");
+			wrongDataEntered = true;
+		}
+		if(passwordRegistration.getText() == null || passwordRegistration.getText() == "") {
+			passwordErrorRegistration.setText("Password cannot be empty");
+			wrongDataEntered = true;
+		}
+		
+		if(!wrongDataEntered) {
+			DatabaseOperations operations = new DatabaseOperations();
+			boolean userNameExists = operations.checkUserNameExists(firstNameRegistration.getText());
+			
+			if(userNameExists) {
+				
+			}
+			else {
+				boolean userSaved = operations.saveUserInDatabase(new User(firstNameRegistration.getText(), lastNameRegistration.getText(), userNameRegistration.getText(), passwordRegistration.getText()));
+				if(userSaved) {
+					LoginScene loginScene = new LoginScene(primaryStage);
+					primaryStage.setTitle(loginScene.getTitle());
+					primaryStage.setScene(loginScene.getScene());
+
+					primaryStage.show();
+				}
+				else {
+					
+			}
+				
+			}
+		}
+		
 	}
 
 }

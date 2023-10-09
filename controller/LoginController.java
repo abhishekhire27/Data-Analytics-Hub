@@ -10,9 +10,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import view.MenuScene;
 import view.RegisterScene;
 
 public class LoginController {
@@ -27,9 +29,15 @@ public class LoginController {
 	
 	@FXML
 	private TextField userName;
-	
 	@FXML
 	private TextField password;
+	
+	@FXML
+	private Text userNameErrorLogin;
+	@FXML
+	private Text passwordErrorLogin;
+	@FXML
+	private Text invalidCredentialsMessage;
 	
 //	@FXML
 //	private void initialize() {
@@ -68,18 +76,42 @@ public class LoginController {
 		primaryStage.setScene(registerScene.getScene());
 
 		primaryStage.show();
-		
 	}
 	
 	public void loginHandler(ActionEvent event) {
-		System.out.println("Welcome to login");
-		userName.setText("Reuben");
-		System.out.println(password.getText());
+		// Reseting the error message
+		userNameErrorLogin.setText("");
+		passwordErrorLogin.setText("");
+		
+		boolean wrongCredentialsEntered = false;
+		if(userName.getText() == null || userName.getText() == "") {
+			userNameErrorLogin.setText("User name cannot be empty");
+			wrongCredentialsEntered = true;
+		}
+		if(password.getText() == null || password.getText() == "") {
+			passwordErrorLogin.setText("Password cannot be empty");
+			wrongCredentialsEntered = true;
+		}
+		if(!wrongCredentialsEntered) {
+			boolean loginSuccess = this.checkCredentials();
+			
+			if(loginSuccess) {
+				MenuScene menuScene = new MenuScene(primaryStage);
+				primaryStage.setTitle(menuScene.getTitle());
+				primaryStage.setScene(menuScene.getScene());
+
+				primaryStage.show();
+			}
+			else {
+				invalidCredentialsMessage.setText("Username and password doesn't match");
+			}
+		}
+
 	}
 	
-	public void registerHandler(ActionEvent event) {
-//		this.switchToRegisterSceneHandler(event);
-		System.out.println("Welcome to register");
+	private boolean checkCredentials() {
+		System.out.println("Checking Credentials");
+		return true;
 	}
 	
 }
