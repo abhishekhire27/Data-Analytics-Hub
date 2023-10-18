@@ -103,7 +103,7 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="600.0">
                <children>
-                  <Button alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#registerHandler" text="Update Profile" textFill="#08793b">
+                  <Button alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#updateProfileButton" text="Update Profile" textFill="#08793b">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>

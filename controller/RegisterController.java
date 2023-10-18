@@ -66,11 +66,11 @@ public class RegisterController {
 		}
 		
 		if(!wrongDataEntered) {
-			DatabaseOperations operations = new DatabaseOperations();
-			boolean userNameExists = operations.checkUserNameExists(firstNameRegistration.getText());
+			DatabaseOperations operations = DatabaseOperations.getInstance();
+			boolean userNameExists = operations.checkUserNameExists(userNameRegistration.getText());
 			
 			if(userNameExists) {
-				
+				userNameErrorRegistration.setText("User name already exists");
 			}
 			else {
 				boolean userSaved = operations.saveUserInDatabase(new User(firstNameRegistration.getText(), lastNameRegistration.getText(), userNameRegistration.getText(), passwordRegistration.getText()));

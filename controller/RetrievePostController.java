@@ -1,7 +1,5 @@
 package controller;
 
-import java.time.LocalDateTime;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
@@ -11,7 +9,9 @@ import javafx.stage.Stage;
 import model.SocialMediaPost;
 import view.MenuScene;
 
-public class AddPostController {
+public class RetrievePostController {
+	
+private Stage primaryStage;
 	
 	@FXML
 	private TextField postId;
@@ -28,41 +28,30 @@ public class AddPostController {
 	
 	@FXML
 	private Text postIdError;
-	@FXML
-	private Text contentError;
-	@FXML
-	private Text authorError;
-	@FXML
-	private Text likesError;
-	@FXML
-	private Text sharesError;
-	@FXML
-	private Text dateTimeError;
-	@FXML
-	private Text postAddingError;
-	
-	private Stage primaryStage;
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
 	
 	@FXML
-	public void addPostHandler(ActionEvent event) {
+	public void retrievePostHandler(ActionEvent event) {
 		DatabaseOperations operations = DatabaseOperations.getInstance();
-		boolean addPostSuccess = operations.addPost(new SocialMediaPost(postId.getText(), content.getText(), author.getText(), likes.getText(), shares.getText(), dateTime.getAccessibleText()));
+		SocialMediaPost socialMediaPost = operations.retrievePost(postId.getText());
 		
-		if(addPostSuccess) {
-			postId.setText("");
+		if(socialMediaPost != null) {
+			content.setText(socialMediaPost.getContent());
+			author.setText(socialMediaPost.getAuthor());
+			likes.setText(socialMediaPost.getLikes());
+			shares.setText(socialMediaPost.getShares());
+			dateTime.setAccessibleText(socialMediaPost.getDateTime());
+		}
+		else {
+			postIdError.setText("Post Id doesn't exist");
 			content.setText("");
 			author.setText("");
 			likes.setText("");
 			shares.setText("");
-			dateTime.setAccessibleText("");;
-			postAddingError.setText("Post added successfully");
-		}
-		else {
-			postAddingError.setText("Error while adding the post");
+			dateTime.setAccessibleText("");
 		}
 	}
 	
@@ -74,5 +63,4 @@ public class AddPostController {
 
 		primaryStage.show();
 	}
-
 }

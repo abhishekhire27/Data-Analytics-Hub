@@ -3,6 +3,7 @@ package controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.HashMap;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +15,8 @@ import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
+import model.LoggedInUser;
+import model.User;
 import view.MenuScene;
 import view.RegisterScene;
 
@@ -93,9 +96,11 @@ public class LoginController {
 			wrongCredentialsEntered = true;
 		}
 		if(!wrongCredentialsEntered) {
-			boolean loginSuccess = this.checkCredentials();
+			DatabaseOperations operations = DatabaseOperations.getInstance();
+			HashMap<String, Object> returnMap = operations.loginUser(userName.getText(), password.getText());
 			
-			if(loginSuccess) {
+			if((boolean)returnMap.get("loginSuccess")) {
+				LoggedInUser.setInstance((User)returnMap.get("user"));
 				MenuScene menuScene = new MenuScene(primaryStage);
 				primaryStage.setTitle(menuScene.getTitle());
 				primaryStage.setScene(menuScene.getScene());
