@@ -90,12 +90,15 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fx:id="passwordErrorEditProfile" fill="#ec0909" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <PasswordField fx:id="passwordProfileEdit" prefHeight="26.0" prefWidth="213.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin></PasswordField>
+                  <Text fx:id="passwordErrorEditProfile" fill="#ec0909" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="192.00006103515625">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <PasswordField fx:id="passwordProfileEdit" prefHeight="26.0" prefWidth="213.0" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="55.0" prefWidth="600.0">

@@ -22,7 +22,7 @@
       </HBox>
       <Text layoutX="36.0" layoutY="120.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Post with most likes: " />
       <TextField fx:id="nLikes" layoutX="158.0" layoutY="103.0" />
-      <Text fx:id="nLikesErrorMessage" fill="#e80909" layoutX="157.0" layoutY="150.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="1.0" />
+      <Text fx:id="nLikesErrorMessage" fill="#e80909" layoutX="156.0" layoutY="151.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="302.59996032714844" />
       <Button layoutX="436.0" layoutY="103.0" mnemonicParsing="false" onAction="#backToMenuHandler" text="Back to Menu" textFill="#0a5322" />
       <Button layoutX="336.0" layoutY="103.0" mnemonicParsing="false" onAction="#getNLikesPostHandler" text="Get Post" textFill="#2c25b7" />
       <TableView layoutX="166.0" layoutY="186.0" prefHeight="200.0" prefWidth="200.0">

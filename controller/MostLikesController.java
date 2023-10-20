@@ -1,8 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
+import dao.PostDaoImpl;
+import exceptions.CustomNumberFormatException;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -19,7 +20,6 @@ import model.LoggedInUser;
 import model.SocialMediaPost;
 import model.User;
 import view.MenuScene;
-import view.RegisterScene;
 
 public class MostLikesController {
 	
@@ -60,8 +60,22 @@ public class MostLikesController {
 			nLikesErrorMessage.setText("Please enter a valid positive number");
 			wrongNumberEntered = true;
 		}
+		
 		if(!wrongNumberEntered) {
-			DatabaseOperations operations = DatabaseOperations.getInstance();
+			try {
+				//If the parsing fails, means user has but something else instead of number
+				Integer.parseInt(nLikes.getText());
+				
+				if(Integer.parseInt(nLikes.getText()) <= 0) {
+					// Throwing a manual custom exception if the user input a negative number or zerio.
+					throw new CustomNumberFormatException();
+				}
+			}
+			catch(Exception e) {
+				nLikesErrorMessage.setText("Please enter a valid positive number");
+				return;
+			}
+			PostDaoImpl operations = PostDaoImpl.getInstance();
 			User loggedInUser = LoggedInUser.getLoggedInUser();
 			ArrayList<SocialMediaPost> mostLikedPosts = operations.getNLikesPost(Integer.parseInt(nLikes.getText()), loggedInUser.getUserId());
 			this.showInTableFormat(mostLikedPosts, Integer.parseInt(nLikes.getText()));
@@ -71,6 +85,7 @@ public class MostLikesController {
 	@SuppressWarnings("unchecked")
 	public void showInTableFormat(ArrayList<SocialMediaPost> mostLikedPosts, int numberOfRows) {
 		
+		// Create the table according to the data returned from the Database on the same page.
 		this.tableView = new TableView<>();
         ObservableList<SocialMediaPost> data = FXCollections.observableArrayList();
 
@@ -97,7 +112,7 @@ public class MostLikesController {
         tableView.getColumns().addAll(postIdCol, contentCol, authorCol, likesCol, sharesCol, dateTimeCol);
 
         // Add data to the table
-        data.addAll(mostLikedPosts); // Replace 'yourArrayListOfPosts' with your actual ArrayList
+        data.addAll(mostLikedPosts);
 
         tableView.setItems(data);
         tableView.setLayoutY(160.0);
@@ -128,7 +143,7 @@ public class MostLikesController {
         // Remove the TableView from the AnchorPane
         if (tableView != null) {
             mainPane.getChildren().remove(tableView);
-            tableView = null; // Set it to null to release resources
+            tableView = null; // Set it to null
         }
     }
 	

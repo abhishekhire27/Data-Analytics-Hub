@@ -1,8 +1,6 @@
 package view;
 
 import java.io.IOException;
-
-import controller.AddPostController;
 import controller.MostLikesController;
 import controller.constants.FXMLFileNames;
 import javafx.fxml.FXMLLoader;

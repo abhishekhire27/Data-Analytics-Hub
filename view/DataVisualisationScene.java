@@ -1,6 +1,6 @@
 package view;
 
-import controller.DatabaseOperations;
+import dao.PostDaoImpl;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.chart.PieChart;
@@ -16,7 +16,7 @@ public class DataVisualisationScene extends Application {
         pieChart.setTitle("Distribution of Shares");
         
         User loggedInUser = LoggedInUser.getLoggedInUser();
-        DatabaseOperations operations = DatabaseOperations.getInstance();
+        PostDaoImpl operations = PostDaoImpl.getInstance();
         
         pieChart.getData().add(new PieChart.Data("0-99 Shares", operations.getCountPostsInRange(0, 99, loggedInUser.getUserId())));
         pieChart.getData().add(new PieChart.Data("100-999 Shares", operations.getCountPostsInRange(100, 999, loggedInUser.getUserId())));

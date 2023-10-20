@@ -1,12 +1,12 @@
 package controller;
 
+import dao.PostDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.LoggedInUser;
-import model.SocialMediaPost;
 import model.User;
 import view.MenuScene;
 
@@ -24,10 +24,12 @@ public class RemovePostController {
 		this.primaryStage = primaryStage;
 	}
 	
+	// Function to handle the delete post button
 	@FXML
 	public void deletePostButton(ActionEvent event) {
-		DatabaseOperations operations = DatabaseOperations.getInstance();
+		PostDaoImpl operations = PostDaoImpl.getInstance();
 		User loggedInUser = LoggedInUser.getLoggedInUser();
+		// database operation to remove the post. It takes the userId as well.
 		boolean removePostSuccess = operations.removePost(postId.getText(), loggedInUser.getUserId());
 		
 		if(removePostSuccess) {

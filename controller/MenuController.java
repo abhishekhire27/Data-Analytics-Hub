@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import dao.UserDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -27,6 +28,7 @@ import view.MostLikesScene;
 import view.RemovePostScene;
 import view.RetrievePostScene;
 
+// The class of the main menu of the user
 public class MenuController {
 	
 	private Stage primaryStage;
@@ -51,6 +53,7 @@ public class MenuController {
 		this.primaryStage = primaryStage;
 		User loggedInUser = LoggedInUser.getLoggedInUser();
 		
+		// If the user is VIP user, then make the VIP functionality visible
 		if(loggedInUser.isVipMember()) {
 			this.subscriptionText.setText("");
 			this.makeVipMemberButton.setVisible(false);
@@ -66,6 +69,7 @@ public class MenuController {
 		this.welcomeMessage.setText("Welcome " + loggedInUser.getFirstName() + ",");
 	}
 	
+	// Function handler to go to update profile page
 	@FXML
 	public void updateProfileButtonHandler(ActionEvent event) {
 		EditProfileScene editProfileScene = new EditProfileScene(primaryStage);
@@ -75,6 +79,7 @@ public class MenuController {
 		primaryStage.show();
 	}
 
+	// Function handler to go to add post page
 	@FXML
 	public void addPostButtonHandler(ActionEvent event) {
 		AddPostScene addPostScene = new AddPostScene(primaryStage);
@@ -84,6 +89,7 @@ public class MenuController {
 		primaryStage.show();
 	}
 
+	// Function handler to go to retrieve post page
 	@FXML
 	public void retrievePostButtonHandler(ActionEvent event) {
 		RetrievePostScene retrievePostScene = new RetrievePostScene(primaryStage);
@@ -94,6 +100,7 @@ public class MenuController {
 		primaryStage.show();
 	}
 
+	// Function handler to go to remove post page
 	@FXML
 	public void removePostButtonHandler(ActionEvent event) {
 		RemovePostScene removePostScene = new RemovePostScene(primaryStage);
@@ -104,6 +111,7 @@ public class MenuController {
 		primaryStage.show();
 	}
 
+	// Function handler to go to n most liked post page
 	@FXML
 	public void nLikesButtonHandler(ActionEvent event) {
 		MostLikesScene mostLikesScene = new MostLikesScene(primaryStage);
@@ -114,6 +122,7 @@ public class MenuController {
 		primaryStage.show();
 	}
 	
+	// Function handler to go to export post page
 	@FXML
 	public void exportButtonHandler(ActionEvent event) {
 		ExportPostScene exportPostScene = new ExportPostScene(primaryStage);
@@ -124,6 +133,7 @@ public class MenuController {
 		primaryStage.show();
 	}
 	
+	// Function handler to go to logout post page
 	@FXML
 	public void logoutButtonHandler(ActionEvent event) {
 		LoggedInUser.logout();
@@ -135,9 +145,10 @@ public class MenuController {
 		primaryStage.show();
 	}
 	
+	// Function handler to make the user VIP member
 	@FXML
 	public void makeVipMemberHandler(ActionEvent event) {
-		DatabaseOperations operations = DatabaseOperations.getInstance();
+		UserDaoImpl operations = UserDaoImpl.getInstance();
 		boolean isSuccess = operations.addVipMember(LoggedInUser.getLoggedInUser().getUserId());
 		
 		if(isSuccess) {
@@ -157,6 +168,7 @@ public class MenuController {
 		}
 	}
 	
+	// Function handler to import the post from the CSV
 	@FXML
 	public void importCsvHandler(ActionEvent event) {
 		FileChooser fileChooser = new FileChooser();
@@ -175,6 +187,7 @@ public class MenuController {
         }
 	}
 	
+	// Function to read the CSV file selected by the user.
 	private List<SocialMediaPost> readCSV(File file) throws IOException {
         List<SocialMediaPost> posts = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -199,6 +212,7 @@ public class MenuController {
         return posts;
     }
 	
+	// Function to open the visualization page
 	@FXML
 	public void postDataVisualisationHandler(ActionEvent event) {
 		Stage dataVisualizationStage = new Stage();

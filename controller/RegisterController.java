@@ -1,15 +1,14 @@
 package controller;
 
+import dao.UserDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.User;
 import view.LoginScene;
-import view.RegisterScene;
 
 public class RegisterController {
 	
@@ -40,6 +39,7 @@ public class RegisterController {
 		this.primaryStage = primaryStage;
 	}
 	
+	// FUnction to go back to login page
 	@FXML
 	public void backToLogin(ActionEvent event) {
 		LoginScene loginScene = new LoginScene(primaryStage);
@@ -58,6 +58,7 @@ public class RegisterController {
 		userNameErrorRegistration.setText("");
 		passwordErrorRegistration.setText("");
 		
+		//CHecking if all the data is entered and no fields are left blank
 		boolean wrongDataEntered = false;
 		if(firstNameRegistration.getText() == null || firstNameRegistration.getText() == "") {
 			firstNameErrorRegistration.setText("First name cannot be empty");
@@ -77,7 +78,8 @@ public class RegisterController {
 		}
 		
 		if(!wrongDataEntered) {
-			DatabaseOperations operations = DatabaseOperations.getInstance();
+			UserDaoImpl operations = UserDaoImpl.getInstance();
+			//Checking if username already exists
 			boolean userNameExists = operations.checkUserNameExists(userNameRegistration.getText());
 			
 			if(userNameExists) {
@@ -85,6 +87,7 @@ public class RegisterController {
 			}
 			else {
 				operations.getLatestUserId();
+				// Function to save the user in the database
 				boolean userSaved = operations.saveUserInDatabase(new User(firstNameRegistration.getText(), lastNameRegistration.getText(), userNameRegistration.getText(), passwordRegistration.getText()));
 				if(userSaved) {
 					LoginScene loginScene = new LoginScene(primaryStage);

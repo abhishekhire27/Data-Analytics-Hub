@@ -1,5 +1,6 @@
 package model;
 
+// SIngleton class to get the single instance of the logged in user
 public class LoggedInUser {
     private static User user;
 

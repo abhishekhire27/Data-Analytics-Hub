@@ -1,24 +1,16 @@
 package controller;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 
+import dao.UserDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import model.LoggedInUser;
 import model.User;
-import view.DataVisualisationScene;
 import view.MenuScene;
 import view.RegisterScene;
 
@@ -42,6 +34,7 @@ public class LoginController {
 		this.primaryStage = primaryStage;
 	}
 
+	// Function to go to the registration page
 	@FXML
 	public void switchToRegisterSceneHandler(ActionEvent event) {
 		
@@ -58,6 +51,7 @@ public class LoginController {
 		userNameErrorLogin.setText("");
 		passwordErrorLogin.setText("");
 		
+		//Checking if both username and password is entered
 		boolean wrongCredentialsEntered = false;
 		if(userName.getText() == null || userName.getText() == "") {
 			userNameErrorLogin.setText("User name cannot be empty");
@@ -68,9 +62,10 @@ public class LoginController {
 			wrongCredentialsEntered = true;
 		}
 		if(!wrongCredentialsEntered) {
-			DatabaseOperations operations = DatabaseOperations.getInstance();
+			UserDaoImpl operations = UserDaoImpl.getInstance();
 			HashMap<String, Object> returnMap = operations.loginUser(userName.getText(), password.getText());
 			
+			// If username and password matches in the database
 			if((boolean)returnMap.get("loginSuccess")) {
 				LoggedInUser.setInstance((User)returnMap.get("user"));
 				MenuScene menuScene = new MenuScene(primaryStage);

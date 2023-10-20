@@ -90,12 +90,15 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <Text fx:id="passwordErrorRegistration" fill="#ec0909" strokeType="OUTSIDE" strokeWidth="0.0">
+                  <PasswordField fx:id="passwordRegistration" prefHeight="26.0" prefWidth="211.0">
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin></PasswordField>
+                  <Text fx:id="passwordErrorRegistration" fill="#ec0909" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="148.0000638961792">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <PasswordField fx:id="passwordRegistration" prefHeight="26.0" prefWidth="211.0" />
                </children>
             </HBox>
             <HBox prefHeight="55.0" prefWidth="600.0">

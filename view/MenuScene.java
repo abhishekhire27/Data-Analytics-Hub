@@ -2,7 +2,6 @@ package view;
 
 import java.io.IOException;
 
-import controller.LoginController;
 import controller.MenuController;
 import controller.constants.FXMLFileNames;
 import javafx.fxml.FXMLLoader;

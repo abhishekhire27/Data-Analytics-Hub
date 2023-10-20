@@ -1,5 +1,6 @@
 package controller;
 
+import dao.UserDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -7,13 +8,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import model.LoggedInUser;
 import model.User;
-import view.LoginScene;
 import view.MenuScene;
 
 public class EditProfileController {
 	
 	private Stage primaryStage;
 	
+	// Fields which are used in .fxml files
 	@FXML
 	private TextField firstNameProfileEdit;
 	@FXML
@@ -34,7 +35,7 @@ public class EditProfileController {
 	@FXML
 	private Text invalidCredentilsErrorMessage;
 	
-	
+	// TO set this page as the primary stage
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 		
@@ -53,6 +54,7 @@ public class EditProfileController {
 		userNameErrorEditProfile.setText("");
 		passwordErrorEditProfile.setText("");
 				
+		// Checking one by one if any fields are empty. If yes, give the error message
 		boolean wrongDataEntered = false;
 		if(firstNameProfileEdit.getText() == null || firstNameProfileEdit.getText() == "") {
 			firstNameErrorEditProfile.setText("First name cannot be empty");
@@ -71,19 +73,23 @@ public class EditProfileController {
 			wrongDataEntered = true;
 		}
 		
+		// If all the data entered is correct
 		if(!wrongDataEntered) {
 			User loggedInUser = LoggedInUser.getLoggedInUser();
-			DatabaseOperations operations = DatabaseOperations.getInstance();
+			UserDaoImpl operations = UserDaoImpl.getInstance();
 			
+			// Check if username is already present
 			boolean userNameExists = false;
 			if(!loggedInUser.getUserName().equals(userNameProfileEdit.getText())) {
 				userNameExists = operations.checkUserNameExists(userNameProfileEdit.getText());
 			}
 			
+			// If present, then give the error message and don't allow to edit the profile
 			if(userNameExists) {
 				userNameErrorEditProfile.setText("User name already exists");
 			}
 			else {
+				// If not present, call a function to update the user in the database
 				User user = new User();
 				
 				user.setUserId(loggedInUser.getUserId());
@@ -94,6 +100,7 @@ public class EditProfileController {
 				user.setVipMember(loggedInUser.isVipMember());
 				
 				boolean userUpdated = operations.updateUserInDatabase(user);
+				//To check if the update operation in the database is successful for not.
 				if(userUpdated) {
 					LoggedInUser.setInstance(user);
 					invalidCredentilsErrorMessage.setText("Profile Updated successfully");
@@ -105,6 +112,7 @@ public class EditProfileController {
 		}
 	}
 	
+	// Function to go back to main menu
 	@FXML
 	public void backToMenuHandler(ActionEvent event) {
 		MenuScene menuScene = new MenuScene(primaryStage);

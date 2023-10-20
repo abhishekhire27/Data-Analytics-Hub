@@ -3,7 +3,6 @@ package view;
 import java.io.IOException;
 
 import controller.EditProfileController;
-import controller.LoginController;
 import controller.constants.FXMLFileNames;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

@@ -39,5 +39,6 @@
       <Text fx:id="dateTimeError" fill="#ef0707" layoutX="365.0" layoutY="355.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="149.5999999999999" />
       <Text fx:id="postAddingError" fill="#fc0101" layoutX="150.0" layoutY="390.0" strokeType="OUTSIDE" strokeWidth="0.0" />
       <TextField fx:id="dateTime" layoutX="185.0" layoutY="339.0" />
+      <Text layoutX="29.0" layoutY="369.0" strokeType="OUTSIDE" strokeWidth="0.0" text="(d-MM-yyyy HH:mm))" />
    </children>
 </AnchorPane>

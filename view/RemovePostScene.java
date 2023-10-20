@@ -1,8 +1,6 @@
 package view;
 
 import java.io.IOException;
-
-import controller.LoginController;
 import controller.RemovePostController;
 import controller.constants.FXMLFileNames;
 import javafx.fxml.FXMLLoader;

@@ -1,8 +1,8 @@
 package controller;
 
+import dao.PostDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -35,12 +35,14 @@ private Stage primaryStage;
 		this.primaryStage = primaryStage;
 	}
 	
+	// Function to handle the retrieve post button
 	@FXML
 	public void retrievePostHandler(ActionEvent event) {
-		DatabaseOperations operations = DatabaseOperations.getInstance();
+		PostDaoImpl operations = PostDaoImpl.getInstance();
 		User loggedInUser = LoggedInUser.getLoggedInUser();
 		SocialMediaPost socialMediaPost = operations.retrievePost(postId.getText(), loggedInUser.getUserId());
 		
+		// Setting the retrived data into the text fields
 		if(socialMediaPost != null) {
 			content.setText(socialMediaPost.getContent());
 			author.setText(socialMediaPost.getAuthor());

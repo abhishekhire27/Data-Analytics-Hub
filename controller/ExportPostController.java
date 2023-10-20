@@ -3,9 +3,9 @@ package controller;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
+import dao.PostDaoImpl;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -40,14 +40,16 @@ public class ExportPostController {
 		primaryStage.show();
 	}
 	
+	// FUnction to export the post in the CSV fle
 	public void exportPostHandler(ActionEvent event) {
-		DatabaseOperations operations = DatabaseOperations.getInstance();
+		PostDaoImpl operations = PostDaoImpl.getInstance();
 		User loggedInUser = LoggedInUser.getLoggedInUser();
 		boolean postIdExists = operations.checkPostIdExists(postId.getText(), loggedInUser.getUserId());
 		this.postIdErrorMessage.setText("");
 		if(postIdExists) {
 			SocialMediaPost socialMediaPost = operations.retrievePost(postId.getText(), loggedInUser.getUserId());
 			
+			// Adding the headers of the CSV
 			List<String> header = new ArrayList<>();
 			header.add("Post Id");
 	        header.add("Content");
@@ -56,6 +58,7 @@ public class ExportPostController {
 	        header.add("Shares");
 	        header.add("Date Time");
 	        
+	        // Adding the row data of the CSV
 	        List<String> rowData = new ArrayList<>();
 	        rowData.add(socialMediaPost.getPostId());
 	        rowData.add(socialMediaPost.getContent());
