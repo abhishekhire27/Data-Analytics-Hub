@@ -8,6 +8,7 @@ import java.util.HashMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,6 +18,7 @@ import javafx.stage.FileChooser.ExtensionFilter;
 import javafx.stage.Stage;
 import model.LoggedInUser;
 import model.User;
+import view.DataVisualisationScene;
 import view.MenuScene;
 import view.RegisterScene;
 
@@ -24,16 +26,10 @@ public class LoginController {
 	
 	private Stage primaryStage;
 	
-//	@FXML
-//	private ImageView imageView;
-	
-//	@FXML
-//	private MenuItem clearMenuItem;
-	
 	@FXML
 	private TextField userName;
 	@FXML
-	private TextField password;
+	private PasswordField password;
 	
 	@FXML
 	private Text userNameErrorLogin;
@@ -41,35 +37,10 @@ public class LoginController {
 	private Text passwordErrorLogin;
 	@FXML
 	private Text invalidCredentialsMessage;
-	
-//	@FXML
-//	private void initialize() {
-//		clearMenuItem.setDisable(true);
-//	}
 
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
 	}
-	
-//	@FXML
-//	public void chooseImageHandler(ActionEvent event) {
-//		
-//		FileChooser fileChooser = new FileChooser();
-//		
-//		fileChooser.getExtensionFilters().add(new ExtensionFilter("images", "*.png", "*.jpeg", "*.jpg", "*.gif"));
-//		
-//		File file = fileChooser.showOpenDialog(primaryStage);
-//		
-//		System.out.println(file.getName());
-//		
-//		try {
-//			imageView.setImage(new Image(new FileInputStream(file)));
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		}
-//		
-////		clearMenuItem.setDisable(false);
-//	}
 
 	@FXML
 	public void switchToRegisterSceneHandler(ActionEvent event) {
@@ -79,6 +50,7 @@ public class LoginController {
 		primaryStage.setScene(registerScene.getScene());
 
 		primaryStage.show();
+		
 	}
 	
 	public void loginHandler(ActionEvent event) {
@@ -112,11 +84,6 @@ public class LoginController {
 			}
 		}
 
-	}
-	
-	private boolean checkCredentials() {
-		System.out.println("Checking Credentials");
-		return true;
 	}
 	
 }

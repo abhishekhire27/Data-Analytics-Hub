@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -30,9 +29,9 @@
       <TextField fx:id="author" disable="true" layoutX="183.0" layoutY="247.0" />
       <TextField fx:id="likes" disable="true" layoutX="183.0" layoutY="281.0" />
       <TextField fx:id="shares" disable="true" layoutX="183.0" layoutY="313.0" />
-      <DatePicker fx:id="dateTime" disable="true" layoutX="184.0" layoutY="352.0" />
       <Button layoutX="375.0" layoutY="105.0" mnemonicParsing="false" onAction="#retrievePostHandler" text="Retrieve Post" textFill="#06590d" />
       <Button layoutX="504.0" layoutY="106.0" mnemonicParsing="false" onAction="#backToMenuHandler" text="Back to menu" textFill="#04561a" />
       <Text fx:id="postIdError" fill="#f40505" layoutX="206.0" layoutY="153.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="131.91796875" />
+      <TextField fx:id="dateTime" disable="true" layoutX="184.0" layoutY="352.0" prefHeight="26.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

@@ -15,7 +15,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.LoggedInUser;
 import model.SocialMediaPost;
+import model.User;
 import view.MenuScene;
 import view.RegisterScene;
 
@@ -51,6 +53,7 @@ public class MostLikesController {
 	public void getNLikesPostHandler(ActionEvent event) {
 		// Reseting the error message
 		nLikesErrorMessage.setText("");
+		removeTableView();
 		
 		boolean wrongNumberEntered = false;
 		if(nLikes.getText() == null || nLikes.getText() == "") {
@@ -59,7 +62,8 @@ public class MostLikesController {
 		}
 		if(!wrongNumberEntered) {
 			DatabaseOperations operations = DatabaseOperations.getInstance();
-			ArrayList<SocialMediaPost> mostLikedPosts = operations.getNLikesPost(Integer.parseInt(nLikes.getText()));
+			User loggedInUser = LoggedInUser.getLoggedInUser();
+			ArrayList<SocialMediaPost> mostLikedPosts = operations.getNLikesPost(Integer.parseInt(nLikes.getText()), loggedInUser.getUserId());
 			this.showInTableFormat(mostLikedPosts, Integer.parseInt(nLikes.getText()));
 		}
 	}
@@ -81,10 +85,10 @@ public class MostLikesController {
         authorCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getAuthor()));
 
         TableColumn<SocialMediaPost, String> likesCol = new TableColumn<>("Likes");
-        likesCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getLikes()));
+        likesCol.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getLikes())));
 
         TableColumn<SocialMediaPost, String> sharesCol = new TableColumn<>("Shares");
-        sharesCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getShares()));
+        sharesCol.setCellValueFactory(cellData -> new SimpleStringProperty(String.valueOf(cellData.getValue().getShares())));
 
         TableColumn<SocialMediaPost, String> dateTimeCol = new TableColumn<>("Date & Time");
         dateTimeCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDateTime()));
@@ -101,10 +105,8 @@ public class MostLikesController {
         tableView.setPrefWidth(computeTableViewWidth(postIdCol, contentCol, authorCol, likesCol, sharesCol, dateTimeCol));
 //        tableView.setPrefHeight(computeTableViewHeight(data));
         tableView.setMinWidth(Region.USE_COMPUTED_SIZE);
-
         
         mainPane.getChildren().add(tableView);
-
 	}
 	
 	private double computeTableViewWidth(TableColumn<SocialMediaPost, ?>... columns) {

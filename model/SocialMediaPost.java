@@ -6,30 +6,18 @@ public class SocialMediaPost {
 	private String postId;
 	private String content;
 	private String author;
-	private String likes;
-	private String shares;
+	private long likes;
+	private long shares;
 	private String dateTime;
-	private static int postNumber;
-	
-	//Default constructor to create the object with default values incas no value is passed
-//	public SocialMediaPost() {
-		// THe social media post id will get auto incremented. Hence used it as static, so that only 1 copy of it will be created.
-//		SocialMediaPost.postNumber++;
-//		this.postId = SocialMediaPost.postNumber;
-//		this.content = "";
-//		this.author = "";
-//		this.likes = 0;
-//		this.shares = 0;
-//		this.dateTime = LocalDateTime.now();
-//	}
+	private long userId;
 	
 	public SocialMediaPost() {
 		
 	}
 	
 	//Parameterized constructor
-	public SocialMediaPost(String postId, String content, String author, String likes, String shares,
-			String dateTime) {
+	public SocialMediaPost(String postId, String content, String author, long likes, long shares,
+			String dateTime, long userId) {
 		super();
 		this.postId = postId;
 		this.content = content;
@@ -37,98 +25,64 @@ public class SocialMediaPost {
 		this.likes = likes;
 		this.shares = shares;
 		this.dateTime = dateTime;
+		this.userId = userId;
 	}
-
-	
 
 	public String getPostId() {
 		return postId;
 	}
 
-
-
 	public void setPostId(String postId) {
 		this.postId = postId;
 	}
-
-
 
 	public String getContent() {
 		return content;
 	}
 
-
-
 	public void setContent(String content) {
 		this.content = content;
 	}
-
-
 
 	public String getAuthor() {
 		return author;
 	}
 
-
-
 	public void setAuthor(String author) {
 		this.author = author;
 	}
 
-
-
-	public String getLikes() {
+	public long getLikes() {
 		return likes;
 	}
 
-
-
-	public void setLikes(String likes) {
+	public void setLikes(long likes) {
 		this.likes = likes;
 	}
 
-
-
-	public String getShares() {
+	public long getShares() {
 		return shares;
 	}
 
-
-
-	public void setShares(String shares) {
+	public void setShares(long shares) {
 		this.shares = shares;
 	}
-
-
 
 	public String getDateTime() {
 		return dateTime;
 	}
 
-
-
 	public void setDateTime(String dateTime) {
 		this.dateTime = dateTime;
 	}
 
-
-
-	public static int getPostNumber() {
-		return postNumber;
+	public long getUserId() {
+		return userId;
 	}
 
-
-
-	public static void setPostNumber(int postNumber) {
-		SocialMediaPost.postNumber = postNumber;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 
-
-
-//	@Override
-//	public String toString() {
-//		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy HH:mm");
-//		return postId + "," + content + "," + author + "," + likes + "," + shares + "," + dateTime.format(formatter);
-//	}
 	
 }

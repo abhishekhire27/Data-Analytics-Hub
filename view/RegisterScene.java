@@ -49,39 +49,6 @@ public class RegisterScene {
 		Scene scene = new Scene(parentNode);
 		return scene;
 		
-		
-		
-		
-//		Pane pane = new Pane();
-//		
-//		Button goBackButton = new Button("Go Back");
-//
-//		 goBackButton.setOnAction(new GoBackButtonController());
-//		
-//		goBackButton.setOnAction(event -> {
-//			// controller logic
-//			System.out.println("button clicked");
-//		});
-//		
-//		SecondSceneController controller = new SecondSceneController();
-//		controller.setPrimaryStage(primaryStage);
-//		
-//		goBackButton.setOnAction(controller::goBackButtonHandler);
-//		
-//		Button b2 = new Button();
-//		
-//		b2.setOnAction(controller::button2Handler);
-//		
-//		
-//		
-//		pane.getChildren().add(goBackButton);
-//		pane.setPadding(new Insets(10, 10, 10 , 10));
-//		
-//		// create a scene
-//		Scene scene = new Scene(pane);
-//		
-//		return scene;
-		
 	}
 	
 	

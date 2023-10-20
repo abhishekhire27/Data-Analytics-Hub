@@ -3,6 +3,7 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -21,7 +22,7 @@ public class RegisterController {
 	@FXML
 	private TextField userNameRegistration;
 	@FXML
-	private TextField passwordRegistration;
+	private PasswordField passwordRegistration;
 	
 	@FXML
 	private Text firstNameErrorRegistration;
@@ -37,6 +38,16 @@ public class RegisterController {
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
+	}
+	
+	@FXML
+	public void backToLogin(ActionEvent event) {
+		LoginScene loginScene = new LoginScene(primaryStage);
+		
+		primaryStage.setTitle(loginScene.getTitle());
+		primaryStage.setScene(loginScene.getScene());
+		
+		primaryStage.show();
 	}
 	
 	@FXML
@@ -73,6 +84,7 @@ public class RegisterController {
 				userNameErrorRegistration.setText("User name already exists");
 			}
 			else {
+				operations.getLatestUserId();
 				boolean userSaved = operations.saveUserInDatabase(new User(firstNameRegistration.getText(), lastNameRegistration.getText(), userNameRegistration.getText(), passwordRegistration.getText()));
 				if(userSaved) {
 					LoginScene loginScene = new LoginScene(primaryStage);
@@ -82,7 +94,7 @@ public class RegisterController {
 					primaryStage.show();
 				}
 				else {
-					
+					invalidCredentilsErrorMessage.setText("Something went wrong while registering");
 			}
 				
 			}

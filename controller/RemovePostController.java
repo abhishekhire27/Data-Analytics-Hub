@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.LoggedInUser;
 import model.SocialMediaPost;
+import model.User;
 import view.MenuScene;
 
 public class RemovePostController {
@@ -25,7 +27,8 @@ public class RemovePostController {
 	@FXML
 	public void deletePostButton(ActionEvent event) {
 		DatabaseOperations operations = DatabaseOperations.getInstance();
-		boolean removePostSuccess = operations.removePost(postId.getText());
+		User loggedInUser = LoggedInUser.getLoggedInUser();
+		boolean removePostSuccess = operations.removePost(postId.getText(), loggedInUser.getUserId());
 		
 		if(removePostSuccess) {
 			postId.setText("");

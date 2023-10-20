@@ -1,11 +1,25 @@
 package controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.text.Text;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import model.LoggedInUser;
+import model.SocialMediaPost;
+import model.User;
 import view.AddPostScene;
+import view.DataVisualisationScene;
 import view.EditProfileScene;
 import view.ExportPostScene;
 import view.LoginScene;
@@ -19,30 +33,37 @@ public class MenuController {
 	
 	@FXML
 	private Text welcomeMessage;
-	
 	@FXML
 	private Text subscriptionText;
-	
 	@FXML
 	private Text importCsvText;
 	
 	@FXML
 	private Text dataVisualisationText;
-	
 	@FXML
 	private Button importButtonId;
-	
 	@FXML
 	private Button dataVisualisationButtonId;
+	@FXML
+	private Button makeVipMemberButton;
 	
 	public void setPrimaryStage(Stage primaryStage) {
 		this.primaryStage = primaryStage;
-//		this.subscriptionText.setText("");
-		this.importCsvText.setText("");
-		this.dataVisualisationText.setText("");
+		User loggedInUser = LoggedInUser.getLoggedInUser();
 		
-		this.importButtonId.setVisible(false);
-		this.dataVisualisationButtonId.setVisible(false);
+		if(loggedInUser.isVipMember()) {
+			this.subscriptionText.setText("");
+			this.makeVipMemberButton.setVisible(false);
+		}
+		else {
+			this.importCsvText.setText("");
+			this.dataVisualisationText.setText("");
+			this.importButtonId.setVisible(false);
+			this.dataVisualisationButtonId.setVisible(false);
+			
+		}
+		
+		this.welcomeMessage.setText("Welcome " + loggedInUser.getFirstName() + ",");
 	}
 	
 	@FXML
@@ -105,7 +126,7 @@ public class MenuController {
 	
 	@FXML
 	public void logoutButtonHandler(ActionEvent event) {
-		
+		LoggedInUser.logout();
 		LoginScene loginScene = new LoginScene(primaryStage);
 		
 		primaryStage.setTitle(loginScene.getTitle());
@@ -116,16 +137,75 @@ public class MenuController {
 	
 	@FXML
 	public void makeVipMemberHandler(ActionEvent event) {
+		DatabaseOperations operations = DatabaseOperations.getInstance();
+		boolean isSuccess = operations.addVipMember(LoggedInUser.getLoggedInUser().getUserId());
 		
+		if(isSuccess) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+	        alert.setTitle("VIP Member");
+	        alert.setHeaderText("Success");
+	        alert.setContentText("You can now enjoy VIP member benefits. Please Login again");
+	        
+	        alert.showAndWait();
+	        
+			LoginScene loginScene = new LoginScene(primaryStage);
+			
+			primaryStage.setTitle(loginScene.getTitle());
+			primaryStage.setScene(loginScene.getScene());
+			
+			primaryStage.show();
+		}
 	}
 	
 	@FXML
 	public void importCsvHandler(ActionEvent event) {
-		
+		FileChooser fileChooser = new FileChooser();
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File file = fileChooser.showOpenDialog(null);
+        List<SocialMediaPost> data = new ArrayList<>();
+        if (file != null) {
+            try {
+                List<SocialMediaPost> posts = readCSV(file);
+                data.addAll(posts);
+            } catch (IOException e) {
+//                displayError("Error Reading CSV", "An error occurred while reading the CSV file.");
+            } catch (Exception e) {
+//                displayError("CSV Format Error", "The CSV file does not follow the correct format.");
+            }
+        }
 	}
+	
+	private List<SocialMediaPost> readCSV(File file) throws IOException {
+        List<SocialMediaPost> posts = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] parts = line.split(",");
+                if (parts.length == 6) {
+                    // Assuming your CSV format has 6 columns
+                    SocialMediaPost post = new SocialMediaPost();
+                    post.setPostId(parts[0]);
+                    post.setContent(parts[1]);
+                    post.setAuthor(parts[2]);
+                    post.setLikes(Long.parseLong(parts[3]));
+                    post.setShares(Long.parseLong(parts[4]));
+                    post.setDateTime(parts[5]);
+                    posts.add(post);
+                } else {
+//                    throw new CSVFormatException("Invalid CSV format");
+                }
+            }
+        }
+        return posts;
+    }
 	
 	@FXML
 	public void postDataVisualisationHandler(ActionEvent event) {
+		Stage dataVisualizationStage = new Stage();
+        DataVisualisationScene dataVisualisationScene = new DataVisualisationScene();
+        dataVisualisationScene.start(dataVisualizationStage);
+        dataVisualizationStage.setTitle("Data Visualization");
+        dataVisualizationStage.show();
 		
 	}
 

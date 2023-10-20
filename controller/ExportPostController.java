@@ -11,7 +11,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.LoggedInUser;
 import model.SocialMediaPost;
+import model.User;
 import view.MenuScene;
 
 public class ExportPostController {
@@ -40,10 +42,11 @@ public class ExportPostController {
 	
 	public void exportPostHandler(ActionEvent event) {
 		DatabaseOperations operations = DatabaseOperations.getInstance();
-		
-		boolean postIdExists = operations.checkPostIdExists(postId.getText());
+		User loggedInUser = LoggedInUser.getLoggedInUser();
+		boolean postIdExists = operations.checkPostIdExists(postId.getText(), loggedInUser.getUserId());
+		this.postIdErrorMessage.setText("");
 		if(postIdExists) {
-			SocialMediaPost socialMediaPost = operations.retrievePost(postId.getText());
+			SocialMediaPost socialMediaPost = operations.retrievePost(postId.getText(), loggedInUser.getUserId());
 			
 			List<String> header = new ArrayList<>();
 			header.add("Post Id");
@@ -57,8 +60,8 @@ public class ExportPostController {
 	        rowData.add(socialMediaPost.getPostId());
 	        rowData.add(socialMediaPost.getContent());
 	        rowData.add(socialMediaPost.getAuthor());
-	        rowData.add(socialMediaPost.getLikes());
-	        rowData.add(socialMediaPost.getShares());
+	        rowData.add(String.valueOf(socialMediaPost.getLikes()));
+	        rowData.add(String.valueOf(socialMediaPost.getShares()));
 	        rowData.add(socialMediaPost.getDateTime());
 	        
 	        List<List<String>> data = new ArrayList<>();
@@ -77,6 +80,7 @@ public class ExportPostController {
 	                }
 	                writer.append("\n");
 	            }
+	          this.postIdErrorMessage.setText("Post Id exported successfully");
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	            this.postIdErrorMessage.setText("Something wrong in exporting the post");

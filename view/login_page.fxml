@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -55,16 +56,12 @@
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
-                  <TextField fx:id="password">
-                     <HBox.margin>
-                        <Insets left="20.0" />
-                     </HBox.margin>
-                  </TextField>
                   <Text fx:id="passwordErrorLogin" fill="#ec0707" strokeType="OUTSIDE" strokeWidth="0.0">
                      <HBox.margin>
                         <Insets left="20.0" />
                      </HBox.margin>
                   </Text>
+                  <PasswordField fx:id="password" />
                </children>
             </HBox>
             <HBox prefHeight="40.0" prefWidth="539.0">

@@ -13,13 +13,16 @@ public class LoggedInUser {
 
     // Public method to get the single instance
     public static LoggedInUser setInstance(User user) {
-        if (loggedInUserInstance == null) {
-        	loggedInUserInstance = new LoggedInUser(user);
-        }
+    	loggedInUserInstance = new LoggedInUser(user);
         return loggedInUserInstance;
     }
 
     public static User getLoggedInUser() {
     	return user;
+    }
+    
+    public static void logout() {
+    	LoggedInUser.user = null;
+    	loggedInUserInstance = null;
     }
 }

@@ -44,9 +44,7 @@ public class LoginScene {
 		
 		// create a scene
 		Scene scene = new Scene(parentNode);
-		
 		return scene;
-		
 	}
 	
 }

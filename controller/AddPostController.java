@@ -8,7 +8,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.LoggedInUser;
 import model.SocialMediaPost;
+import model.User;
 import view.MenuScene;
 
 public class AddPostController {
@@ -24,7 +26,7 @@ public class AddPostController {
 	@FXML
 	private TextField shares;
 	@FXML
-	private DatePicker dateTime;
+	private TextField dateTime;
 	
 	@FXML
 	private Text postIdError;
@@ -50,20 +52,31 @@ public class AddPostController {
 	@FXML
 	public void addPostHandler(ActionEvent event) {
 		DatabaseOperations operations = DatabaseOperations.getInstance();
-		boolean addPostSuccess = operations.addPost(new SocialMediaPost(postId.getText(), content.getText(), author.getText(), likes.getText(), shares.getText(), dateTime.getAccessibleText()));
+		User loggedInUser = LoggedInUser.getLoggedInUser();
+		boolean postIdExists = operations.checkPostIdExists(postId.getText(), loggedInUser.getUserId());
 		
-		if(addPostSuccess) {
-			postId.setText("");
-			content.setText("");
-			author.setText("");
-			likes.setText("");
-			shares.setText("");
-			dateTime.setAccessibleText("");;
-			postAddingError.setText("Post added successfully");
+		long postLikes = Long.parseLong(likes.getText());
+		long postShares = Long.parseLong(shares.getText());
+		
+		if(postIdExists) {
+			postAddingError.setText("Post Id already exists");
 		}
 		else {
-			postAddingError.setText("Error while adding the post");
-		}
+			boolean addPostSuccess = operations.addPost(new SocialMediaPost(postId.getText(), content.getText(), author.getText(), postLikes, postShares, dateTime.getText(), loggedInUser.getUserId()));
+			
+			if(addPostSuccess) {
+				postId.setText("");
+				content.setText("");
+				author.setText("");
+				likes.setText("");
+				shares.setText("");
+				dateTime.setText("");;
+				postAddingError.setText("Post added successfully");
+			}
+			else {
+				postAddingError.setText("Error while adding the post");
+			}
+		}	
 	}
 	
 	@FXML

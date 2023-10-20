@@ -6,7 +6,9 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import model.LoggedInUser;
 import model.SocialMediaPost;
+import model.User;
 import view.MenuScene;
 
 public class RetrievePostController {
@@ -24,7 +26,7 @@ private Stage primaryStage;
 	@FXML
 	private TextField shares;
 	@FXML
-	private DatePicker dateTime;
+	private TextField dateTime;
 	
 	@FXML
 	private Text postIdError;
@@ -36,14 +38,15 @@ private Stage primaryStage;
 	@FXML
 	public void retrievePostHandler(ActionEvent event) {
 		DatabaseOperations operations = DatabaseOperations.getInstance();
-		SocialMediaPost socialMediaPost = operations.retrievePost(postId.getText());
+		User loggedInUser = LoggedInUser.getLoggedInUser();
+		SocialMediaPost socialMediaPost = operations.retrievePost(postId.getText(), loggedInUser.getUserId());
 		
 		if(socialMediaPost != null) {
 			content.setText(socialMediaPost.getContent());
 			author.setText(socialMediaPost.getAuthor());
-			likes.setText(socialMediaPost.getLikes());
-			shares.setText(socialMediaPost.getShares());
-			dateTime.setAccessibleText(socialMediaPost.getDateTime());
+			likes.setText(String.valueOf(socialMediaPost.getLikes()));
+			shares.setText(String.valueOf(socialMediaPost.getShares()));
+			dateTime.setText(socialMediaPost.getDateTime());
 		}
 		else {
 			postIdError.setText("Post Id doesn't exist");
@@ -51,7 +54,7 @@ private Stage primaryStage;
 			author.setText("");
 			likes.setText("");
 			shares.setText("");
-			dateTime.setAccessibleText("");
+			dateTime.setText("");
 		}
 	}
 	
